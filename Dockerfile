@@ -5,5 +5,6 @@ COPY package.json .
 RUN npm install    
 #we split the copy into two parts for optimization that when only source code is change , then we don't need to again run step 3 where package.json is again copied and then installed
 COPY . ./
-EXPOSE 3000
-CMD ["node","index.js"]
+ENV PORT 3000
+EXPOSE $PORT
+CMD ["npm","run","dev"]
