@@ -10,4 +10,12 @@ services:
       - /app/node_modules
     environment:
       - NODE_ENV=development
+      - MONGO_USER=gautam
+      - MONGO_PASSWORD=admin
     command: npm run dev
+
+  mongo:
+    image: mongo
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: gautam
+      MONGO_INITDB_ROOT_PASSWORD: admin
