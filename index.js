@@ -2,6 +2,7 @@ const express= require('express');
 const mongoose=require('mongoose');
 const { MONGO_USER, MONGO_PASSWORD, MONGO_IP, MONGO_PORT } = require('./config/config.js');
 
+const postRouter= require("./routes/postRoute.js")
 const app = express();
 
 
@@ -13,9 +14,12 @@ const connectWithRetry= ()=>{  //so that if by chance mongocontainer is not runn
     })
 }
 connectWithRetry();
+app.use(express.json());
 app.get('/', (req, res)=>{
     res.send("<h1>Welcome!!!</h1>");
 })
+
+app.use("/api/v1/posts",postRouter)
 
 const port=process.env.PORT || 3000;
 
