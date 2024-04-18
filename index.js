@@ -2,6 +2,7 @@ const express= require('express');
 const mongoose=require('mongoose');
 const session =require('express-session');
 const redis=require('redis');
+const cors= require('cors');
 const { MONGO_USER, MONGO_PASSWORD, MONGO_IP, MONGO_PORT, REDIS_URL, SESSION_SECRET, REDIS_PORT } = require('./config/config.js');
 
 let RedisStore=require('connect-redis').default;
@@ -29,6 +30,9 @@ const connectWithRetry= ()=>{  //so that if by chance mongocontainer is not runn
     })
 }
 connectWithRetry();
+
+app.enable("trust proxy");
+app.use(cors({}));
 app.use(express.json());
 app.use(session({
     store: redisStore,
@@ -42,7 +46,8 @@ app.use(session({
     }
 }))
 
-app.get('/', (req, res)=>{
+app.get('/api/v1', (req, res)=>{
+    console.log("Yeah it ran");
     res.send("<h1>Welcome!!!</h1>");
 })
 
